@@ -9,10 +9,11 @@
             Created = DateTime.Now;
             AccountStatus = AccountStatus.Active;
             AccountType = accountType;
-
+            Title = title;
 
             index = index + 1;
         }
+
 
         // data variables
         // code
@@ -24,7 +25,7 @@
         public string Title
         {
             get { return title; }
-            private set { title = value; }
+            set { title = value; }
         }
 
         // craeted
@@ -34,10 +35,11 @@
         public AccountStatus AccountStatus { get; private set; }
 
         // account type
-        public AccountType AccountType { get; }
+        public AccountType AccountType { get;}
 
         // balance
         private decimal balance;
+        private int accountType;
 
         public decimal Balance
         {
@@ -74,7 +76,7 @@
     public enum AccountStatus
     {
         Active = 1,
-        Passive
+        Passive =2
     }
 
     public enum AccountType
