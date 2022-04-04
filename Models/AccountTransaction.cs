@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApp
+namespace Models
 {
-    internal class BankAccount
+    public class AccountTransaction
     {
     }
 }
