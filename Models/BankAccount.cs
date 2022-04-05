@@ -5,7 +5,7 @@
         private static int index = 1000;
         public BankAccount(AccountType accountType)
         {
-            Code = index;
+            Code = index.ToString();
             Created = DateTime.Now;
             AccountStatus = AccountStatus.Active;
             AccountType = accountType;
@@ -17,7 +17,7 @@
 
         // data variables
         // code
-        public int Code { get; }
+        public string Code { get; }
 
         // title
         private string title;
@@ -81,7 +81,7 @@
 
     public enum AccountType
     {
-        Saving,
+        Saving=1,
         Current
     }
 }

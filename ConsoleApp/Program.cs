@@ -9,61 +9,61 @@ namespace ConsoleApp
         {
             // Menu
             BankAccount[] bankAccounts = new BankAccount[2];
-            bool choice = true;
             int indexer = 0;
+            bool choice = true;
             do
             {
+                Console.Clear();
                 BankAccountOptions();
 
                 string option = Console.ReadLine();
-                int code;
+                string title, code, accountType;
+                BankAccount bankAccount=null;
+
                 switch (option)
                 {
 
                     case "1":
                         //Create new Account
-                        Console.WriteLine("Enter Account Name:");
-                        string title = Console.ReadLine();
-                        Console.WriteLine("Enter type for your account, Press 0 for Saving, Press 1 for Current");
-                        var accountType = Console.ReadLine();
-                        var at = AccountType.Current;
-                        if (accountType == "0")
-                        {
-                            at = AccountType.Saving;
-                        }
-                        BankAccount bankAccount = new BankAccount(at);
-                        bankAccount.Title = title;
-                        bankAccounts[indexer] = bankAccount;
-                        indexer++;
                         Console.Clear();
+                        Console.WriteLine("Enter Account Title:");
+                        title = Console.ReadLine().Trim();
+
+                        Console.WriteLine("Enter type for your account, Press 1) for Saving, Press 2) for Current");
+                         accountType = Console.ReadLine().Trim();
+
+                        if (accountType == "1")
+                        {
+                            bankAccount = new BankAccount(AccountType.Saving)
+                            {
+                                Title = title
+                            };
+                        }
+                        else if (accountType == "2") 
+                        {
+                            bankAccount = new BankAccount(AccountType.Current)
+                            {
+                                Title = title
+                            };
+                        }
+
+                        if (bankAccount !=null)
+                        {
+                            bankAccounts[indexer] = bankAccount;
+                            indexer += 1;
+                            Console.WriteLine("Account Created with account #:" + bankAccount.Code);
+                        }
+                        Console.WriteLine("Press any key for main menu...");
+                        Console.ReadKey();
                         break;
                     case "2":
-                        //loop through all the bank accounts
-                        Console.WriteLine("List of Accounts with Details:");
-                        if (indexer == 0)
-                        {
-                            Console.WriteLine("There is not data");
-                            Console.WriteLine("--------------");
-                            break;
-                        }
-                        for (int i = 0; i < bankAccounts.Length; i++)
-                        {
-                            Console.WriteLine("-------------------------------------------");
-                            Console.WriteLine("Account Number is: " + bankAccounts[i].Code);
-                            Console.WriteLine("Account Title is: " + bankAccounts[i].Title);
-                            Console.WriteLine("Account Type is: " + bankAccounts[i].AccountType);
-                            Console.WriteLine("Account Status is: " + bankAccounts[i].AccountStatus);
-                            Console.WriteLine("Account Balance is: " + bankAccounts[i].Balance);
-                            Console.WriteLine("-------------------------------------------");
-                        }
-                        break;
-                    case "3":
                         //Search an Account
                         Console.Clear();
                         Console.WriteLine("Enter Account number for searching....");
-                        code = Convert.ToInt32(Console.ReadLine());
-                        for (int i = 0; i < bankAccounts.Length; i++)
-                            if (bankAccounts[i].Code == code)
+                        code = Console.ReadLine().Trim();
+
+                        for (int i = 0; i < indexer; i++) {
+                            if (string.Compare(bankAccounts[i].Code, code) == 0)
                             {
                                 Console.WriteLine("-------------------------------------------");
                                 Console.WriteLine("Account Number is: " + bankAccounts[i].Code);
@@ -73,13 +73,39 @@ namespace ConsoleApp
                                 Console.WriteLine("Account Balance is: " + bankAccounts[i].Balance);
 
                                 Console.WriteLine("-------------------------------------------");
+                                Console.ReadKey();
                             }
+                        }
 
+                        break;
+                    case "3":
+                        //loop through all the bank accounts
+                        Console.Clear();
+                        Console.WriteLine("List of Accounts with Details:");
+                        if (indexer == 0)
+                        {
+                            Console.WriteLine("--------------");
+                            Console.WriteLine("There is no data available");
+                            Console.WriteLine("--------------");
+                            break;
+                        }
+                        for (int i = 0; i < indexer; i++)
+                        {
+
+                            Console.WriteLine("-------------------------------------------");
+                            Console.WriteLine("Account Number is: " + bankAccounts[i].Code);
+                            Console.WriteLine("Account Title is: " + bankAccounts[i].Title);
+                            Console.WriteLine("Account Type is: " + bankAccounts[i].AccountType);
+                            Console.WriteLine("Account Status is: " + bankAccounts[i].AccountStatus);
+                            Console.WriteLine("Account Balance is: " + bankAccounts[i].Balance);
+                            Console.WriteLine("-------------------------------------------");
+                        }
+                            Console.ReadKey();
                         break;
                     case "4":
                         //widraw money
                         Console.WriteLine("Enter a account to withdraw money from");
-                        code = Convert.ToInt32(Console.ReadLine());
+                        code = Console.ReadLine();
                         for (int i = 0; i < bankAccounts.Length; i++)
                             if (bankAccounts[i].Code == code)
                             {
@@ -91,7 +117,7 @@ namespace ConsoleApp
                     case "5":
                         //payin money
                         Console.WriteLine("Enter a account to payin money to");
-                        code = Convert.ToInt32(Console.ReadLine());
+                        code = Console.ReadLine();
                         for (int i = 0; i < bankAccounts.Length; i++)
                             if (bankAccounts[i].Code == code)
                             {
@@ -110,8 +136,8 @@ namespace ConsoleApp
             static void BankAccountOptions()
             {
                 Console.WriteLine("1. Create new account");
-                Console.WriteLine("2. List All Accounts");
-                Console.WriteLine("3. Search an Account");
+                Console.WriteLine("2. Search an Account");
+                Console.WriteLine("3. List All Accounts");
                 Console.WriteLine("4. Withdraw money");
                 Console.WriteLine("5. Pay In money");
                 Console.WriteLine("0. Exit");
